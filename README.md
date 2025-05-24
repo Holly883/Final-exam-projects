@@ -183,7 +183,8 @@ The business process involves the following steps:
 - If approved, the loan is disbursed.
 
 ### 🧩 BPMN Diagram
-Refer to the [`/screenshots/bpmn_diagram.png`](./screenshots/bpmn_diagram.png) for the visual flow of the loan application process.
+Refer to the [`/screenshots/bpmn_diagram.png`](./scre![loan_application_logical_model_v2_diagram](https://github.com/user-attachments/assets/a6876ce0-b92b-4974-80ec-6987ee1f8766)
+enshots/bpmn_diagram.png) for the visual flow of the loan application process.
 
 ---
 
