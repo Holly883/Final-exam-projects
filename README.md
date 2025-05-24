@@ -146,10 +146,85 @@ This process supports **MIS functions** by:
 - **GitHub** for version control and presentation
 
 ---
+# Loan Application Management System (PHASE III)
 
-## ✅ Conclusion
+## 📌 Problem Statement
 
-The BPMN model improves clarity and organizational efficiency, ensuring that all steps are well-documented and decision-making is optimized through MIS.
+Many financial institutions handle loan applications manually or through fragmented systems, which leads to inefficiencies and delays in processing. This project aims to model and implement an automated Loan Application Management System that streamlines customer loan requests, evaluates their eligibility, and processes approvals or rejections through structured data flow and decision-making logic.
+
+## ✅ Objectives
+
+- Automate the loan application process
+- Ensure consistent eligibility checks and decision-making
+- Track document submission and status
+- Integrate disbursement tracking
+
+## 📈 Business Process (BPMN Diagram)
+
+The business process includes the following steps:
+
+1. A customer submits a loan application.
+2. The system performs an eligibility check (credit score, income, etc.).
+3. Documents are uploaded and verified.
+4. A loan officer makes a decision.
+5. If approved, disbursement is scheduled.
+
+![BPMN Diagram](screenshots/loan_application_bpmn.jpg)
+# Loan Application MIS Project
+
+## 📌 Problem Statement
+A bank needs a Management Information System (MIS) to streamline and track loan applications from start to finish. The system should support customer applications, document uploads, eligibility checks, loan officer decisions, and disbursement processing.
+
+## 🔄 Business Process Overview (Phase 2)
+The business process involves the following steps:
+- A customer submits a loan application.
+- Required documents are uploaded.
+- The system performs an eligibility check (based on income and credit score).
+- A loan officer reviews and makes a decision.
+- If approved, the loan is disbursed.
+
+### 🧩 BPMN Diagram
+Refer to the [`/screenshots/bpmn_diagram.png`](./screenshots/bpmn_diagram.png) for the visual flow of the loan application process.
+
+---
+
+## 🧱 Logical Model Design (Phase 3)
+
+### 🗂️ Entities and Attributes
+- **Customer**: `customer_id (PK)`, full_name, email, phone
+- **Loan_Application**: `application_id (PK)`, `customer_id (FK)`, amount, application_date, status
+- **Document**: `document_id (PK)`, `application_id (FK)`, doc_type, upload_date
+- **Eligibility_Check**: `check_id (PK)`, `application_id (FK)`, credit_score, income, result
+- **Loan_Decision**: `decision_id (PK)`, `application_id (FK)`, `officer_id (FK)`, decision_date, decision_status
+- **Loan_Officer**: `officer_id (PK)`, name, email
+- **Disbursement**: `disbursement_id (PK)`, `application_id (FK)`, amount_disbursed, disbursement_date
+
+### 🔗 Relationships
+- A **Customer** can have multiple **Loan Applications**
+- Each **Loan Application** can have multiple **Documents**
+- Each **Loan Application** has one **Eligibility Check**, one **Loan Decision**, and one **Disbursement**
+- A **Loan Officer** makes many **Loan Decisions**
+
+### ✅ Constraints & Normalization
+- All tables are normalized up to **Third Normal Form (3NF)**.
+- **Constraints Used**:
+  - `NOT NULL` on essential fields like IDs and status
+  - `UNIQUE` on emails
+  - `CHECK` on status fields (e.g., loan status, result)
+  - `DEFAULT` values where applicable (e.g., default status = 'Pending')
+
+### 🖼️ ER Diagram
+![ER Diagram](./screenshots/loan_application_logical_model_complete.png)
+
+---
+
+## 💡 MIS Benefits
+- Enhances data consistency and access across the organization
+- Supports informed decision-making by loan officers
+- Reduces manual errors and speeds up processing
+
+## 📂 Project Structure
+
 
 
 
