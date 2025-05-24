@@ -211,7 +211,13 @@ Refer to the [`/screenshots/bpmn_diagram.png`](./screenshots/bpmn_diagram.png) f
   - `UNIQUE` on emails
   - `CHECK` on status fields (e.g., loan status, result)
   - `DEFAULT` values where applicable (e.g., default status = 'Pending')
+## 📚 Normalization
 
+The data model is normalized to **Third Normal Form (3NF)**:
+
+- **1NF**: All attributes are atomic (e.g., no list-type values).
+- **2NF**: All non-key attributes depend on the whole primary key.
+- **3NF**: No transitive dependency between non-key attributes.
 
 ---
 
