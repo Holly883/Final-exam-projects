@@ -227,17 +227,7 @@ The data model is normalized to **Third Normal Form (3NF)**:
 - Supports informed decision-making by loan officers
 - Reduces manual errors and speeds up processing
 
-## 📂 Project Structure
-```plaintext
-LoanApplicationMIS/
-├── README.md
-├── screenshots/
-│   ├── loan_application_bpmn.jpg
-│   └── loan_application_logical_model_v2_diagram.png
-├── database/
-│   └── scripts.sql
-└── presentation/
-    └── slides.pptx
+
 
 ## 🗃️ Phase IV: Pluggable Database Creation and Configuration
 
