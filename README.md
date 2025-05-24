@@ -238,5 +238,38 @@ LoanApplicationMIS/
 └── presentation/
     └── slides.pptx
 
+## 🗃️ Phase IV: Pluggable Database Creation and Configuration
 
+### 🎯 Objective
+To create and configure a PL/SQL Oracle Pluggable Database for the Loan Application MIS project, ensuring proper structure, access, and monitoring using Oracle Enterprise Manager (OEM).
+
+---
+
+### 🔧 1. Database Creation
+
+- **Naming Convention**:  
+ `  
+  Example → ` GrpE_27137_holiness_loanApplicationSystem_DB`
+
+- **Password**:  
+   `holiness`
+
+- **User Privileges**:  
+  - Grant **super admin privileges** to the user
+  - Create necessary tables and schemas inside this pluggable database
+
+#### 📜 SQL Script Example
+```sql
+-- Create pluggable database
+CREATE PLUGGABLE DATABASE GrpE_27137_holiness_loanApplicationSystem_DB
+  ADMIN USER holiness IDENTIFIED BY holiness
+  ROLES = (DBA);
+
+-- Open it
+ALTER PLUGGABLE DATABASE  GrpE_27137_holiness_loanApplicationSystem_DB OPEN;
+
+-- Save state
+ALTER PLUGGABLE DATABASE  GrpE_27137_holiness_loanApplicationSystem_DB SAVE STATE;
+
+![WhatsApp Image 2025-05-25 at 01 01 51_8d252129](https://github.com/user-attachments/assets/bd1e28b6-9b32-46a3-a544-f661069a85e3)
 
