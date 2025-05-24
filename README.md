@@ -75,8 +75,80 @@ This system is designed for **space agencies**, **private satellite companies**,
 - Web interface integration  
 - Satellite command issuing simulation
 
+# Loan Application Process – MIS Project (Phase II)
+
+## 📌 Problem Statement
+
+Loan application processes often suffer from inefficiencies due to poor coordination between departments, incomplete data, and lack of decision support. This MIS project models the loan application workflow to streamline decision-making, improve data flow, and increase transparency for both bank staff and customers.
+
+## 🎯 Objectives
+
+- Model the current loan approval workflow using BPMN.
+- Identify system actors, interactions, and decision points.
+- Demonstrate how MIS supports the process by improving decision-making and reducing manual errors.
+
+---
+
+## 🔄 Methodology
+
+We used **Business Process Model and Notation (BPMN)** to model the flow of the loan application. The model was created using Lucidchart and shows interactions across:
+- Customers
+- Bank Front Desk
+- Loan Approval Department
+
+The diagram uses **swimlanes** to distinguish responsibilities and ensure clarity in process steps.
+
+---
+
+## 👥 Key Entities and Roles
+
+| Entity              | Description                                                                 |
+|---------------------|-----------------------------------------------------------------------------|
+| **Customer**        | Submits application, provides documents, accepts/rejects loan offer         |
+| **Front Desk**      | Checks customer status, collects and verifies documents                     |
+| **Bank System**     | Analyzes transactions, checks financial eligibility                         |
+| **Loan Department** | Decides loan approval, generates agreements, and communicates decisions     |
+
+---
+
+## 🖼️ BPMN Diagram
+
+![Loan Process BPMN](./screenshots/loan_process_bpmn.jpg)
+
+---
+
+## 🔍 Explanation of the Diagram
+
+- **Start:** Customer submits a loan request and required documents.
+- **Document Check:** Front Desk verifies if the documents are complete and checks if the customer is existing or new.
+- **Eligibility Analysis:** The system evaluates financial eligibility and transaction history.
+- **Loan Approval:** If eligible, the loan is approved, terms are proposed, and the customer decides to accept or reject.
+- **End:** Loan is either disbursed or rejected, and the customer is notified.
+
+This process supports **MIS functions** by:
+- Improving decision-making via system-based eligibility checks.
+- Reducing delays through streamlined workflows.
+- Supporting data accuracy by using digital systems instead of manual decisions.
+
+---
+
+## 🗃️ Database Design (for upcoming phases)
+
+[To be completed in later phases: includes ERD, normalization, and PL/SQL implementation.]
+
+---
+
+## 🧠 Tools Used
+
+- **Lucidchart** for diagramming
+- **Markdown** for README documentation
+- **GitHub** for version control and presentation
+
+---
+
+## ✅ Conclusion
+
+The BPMN model improves clarity and organizational efficiency, ensuring that all steps are well-documented and decision-making is optimized through MIS.
 
 
-**Holiness Muvunyi**  
-Student, Software Engineering  
-Adventist University of Central Africa  
+
