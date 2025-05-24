@@ -113,7 +113,8 @@ The diagram uses **swimlanes** to distinguish responsibilities and ensure clarit
 
 ## 🖼️ BPMN Diagram
 
-![Loan Process BPMN](./screenshots/loan_process_bpmn.jpg)
+![Loan Process BPMN](./screenshots/loan_process_bpmn.jpg![WhatsApp Image 2025-05-18 at 22 12 26_e293722b](https://github.com/user-attachments/assets/f341cac7-01ec-441c-9ed5-3657267ff469)
+)
 
 ---
 
