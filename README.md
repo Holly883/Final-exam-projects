@@ -169,8 +169,7 @@ The business process includes the following steps:
 4. A loan officer makes a decision.
 5. If approved, disbursement is scheduled.
 
-![BPMN Diagram](screenshots/loan_application_bpmn.jpg)
-# Loan Application MIS Project
+
 
 ## 📌 Problem Statement
 A bank needs a Management Information System (MIS) to streamline and track loan applications from start to finish. The system should support customer applications, document uploads, eligibility checks, loan officer decisions, and disbursement processing.
@@ -213,8 +212,6 @@ Refer to the [`/screenshots/bpmn_diagram.png`](./screenshots/bpmn_diagram.png) f
   - `CHECK` on status fields (e.g., loan status, result)
   - `DEFAULT` values where applicable (e.g., default status = 'Pending')
 
-### 🖼️ ER Diagram
-![ER Diagram](./screenshots/loan_application_logical_model_complete.png)
 
 ---
 
@@ -224,7 +221,16 @@ Refer to the [`/screenshots/bpmn_diagram.png`](./screenshots/bpmn_diagram.png) f
 - Reduces manual errors and speeds up processing
 
 ## 📂 Project Structure
-
+```plaintext
+LoanApplicationMIS/
+├── README.md
+├── screenshots/
+│   ├── loan_application_bpmn.jpg
+│   └── loan_application_logical_model_v2_diagram.png
+├── database/
+│   └── scripts.sql
+└── presentation/
+    └── slides.pptx
 
 
 
