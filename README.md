@@ -263,4 +263,88 @@ ALTER PLUGGABLE DATABASE  GrpE_27137_holiness_loanApplicationSystem_DB OPEN;
 ALTER PLUGGABLE DATABASE  GrpE_27137_holiness_loanApplicationSystem_DB SAVE STATE;
 
 ![WhatsApp Image 2025-05-25 at 01 01 51_8d252129](https://github.com/user-attachments/assets/bd1e28b6-9b32-46a3-a544-f661069a85e3)
+# 📦 Phase V: Table Implementation & Data Insertion
+
+This phase focuses on transforming the logical design of the Loan Application System into a physical database, ensuring data is accurately structured, inserted, and validated to support project operations and queries.
+
+---
+
+## 🛠️ Table Structure & SQL Implementation
+
+All tables are created in Oracle using appropriate data types, constraints, and relationships to maintain integrity and support real-world use cases.
+
+### 🗃️ 1. Customer Table
+
+```sql
+CREATE TABLE Customer (
+    CustomerID NUMBER PRIMARY KEY,
+    FirstName VARCHAR2(50) NOT NULL,
+    LastName VARCHAR2(50) NOT NULL,
+    Email VARCHAR2(100) UNIQUE NOT NULL,
+    Phone VARCHAR2(20),
+    Address VARCHAR2(150),
+    DateOfBirth DATE CHECK (DateOfBirth <= SYSDATE)
+);
+
+2. LoanApplication Table
+CREATE TABLE LoanApplication (
+    ApplicationID NUMBER PRIMARY KEY,
+    CustomerID NUMBER,
+    LoanAmount NUMBER(12, 2) CHECK (LoanAmount > 0),
+    LoanType VARCHAR2(30) NOT NULL,
+    Status VARCHAR2(20) DEFAULT 'Pending',
+    ApplicationDate DATE DEFAULT SYSDATE,
+    FOREIGN KEY (CustomerID) REFERENCES Customer(CustomerID)
+);
+3. Loan Table
+CREATE TABLE Loan (
+    LoanID NUMBER PRIMARY KEY,
+    ApplicationID NUMBER,
+    DisbursementDate DATE,
+    InterestRate NUMBER(5,2) CHECK (InterestRate > 0),
+    DurationMonths NUMBER CHECK (DurationMonths > 0),
+    FOREIGN KEY (ApplicationID) REFERENCES LoanApplication(ApplicationID)
+);
+
+🗃️ 4. Payment Table
+CREATE TABLE Payment (
+    PaymentID NUMBER PRIMARY KEY,
+    LoanID NUMBER,
+    PaymentDate DATE DEFAULT SYSDATE,
+    AmountPaid NUMBER(10, 2) CHECK (AmountPaid > 0),
+    FOREIGN KEY (LoanID) REFERENCES Loan(LoanID)
+);
+📥 Sample Data Insertion
+-- Customers
+INSERT INTO Customer VALUES (1, 'Holiness', 'Muvunyi', 'holiness@example.com', '0788123456', 'Kigali, Rwanda', TO_DATE('2002-06-10', 'YYYY-MM-DD'));
+INSERT INTO Customer VALUES (2, 'James', 'Smith', 'james.smith@example.com', '0788001122', 'Huye, Rwanda', TO_DATE('1999-03-15', 'YYYY-MM-DD'));
+
+-- Loan Applications
+INSERT INTO LoanApplication VALUES (101, 1, 1500000, 'Personal Loan', 'Approved', TO_DATE('2025-05-10', 'YYYY-MM-DD'));
+INSERT INTO LoanApplication VALUES (102, 2, 5000000, 'Business Loan', 'Pending', TO_DATE('2025-05-12', 'YYYY-MM-DD'));
+
+-- Loans
+INSERT INTO Loan VALUES (1001, 101, TO_DATE('2025-05-15', 'YYYY-MM-DD'), 9.5, 24);
+INSERT INTO Loan VALUES (1002, 102, NULL, NULL, NULL);
+
+-- Payments
+INSERT INTO Payment VALUES (201, 1001, TO_DATE('2025-06-15', 'YYYY-MM-DD'), 150000);
+INSERT INTO Payment VALUES (202, 1001, TO_DATE('2025-07-15', 'YYYY-MM-DD'), 150000);
+
+🔒 Data Integrity & Constraints
+To maintain accuracy and prevent anomalies:
+Primary & Foreign Keys ensure referential integrity
+NOT NULL, CHECK, and UNIQUE constraints validate entries
+Default values support consistency
+Logical relationships follow normalization rules
+
+🧪 Testing & Results
+ All inserted data supports essential operations:
+
+Querying approved applications
+Calculating outstanding loan amounts
+Tracking payment schedules
+Monitoring customer loan history
+📌 All queries return expected results with no violations of constraints or anomalies detected.
+
 
