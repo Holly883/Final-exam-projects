@@ -264,7 +264,7 @@ ALTER PLUGGABLE DATABASE  GrpE_27137_holiness_loanApplicationSystem_DB SAVE STAT
 ![WhatsApp Image 2025-05-25 at 01 01 49_40c45990](https://github.com/user-attachments/assets/03646c85-096f-4877-9619-d7578be42fc8)
 
 
-
+```
 
 # 📦 Phase V: Table Implementation & Data Insertion
 
@@ -340,7 +340,7 @@ Primary & Foreign Keys ensure referential integrity
 NOT NULL, CHECK, and UNIQUE constraints validate entries
 Default values support consistency
 Logical relationships follow normalization rules
-
+```
 🧪 Testing & Results
  All inserted data supports essential operations:
 
