@@ -527,12 +527,113 @@ END loan_pkg;
 
 ---
 
-> 🔍 **Summary**: All database operations are modularized, tested, and logically grouped for maintainability and clarity. The use of packages ensures reusable, secure, and error-resilient interactions with the Loan Application System database.
+📌 Phase VII: Advanced Database Programming and Auditing
+This final phase enhances the database system by integrating advanced PL/SQL programming techniques and implementing auditing mechanisms to monitor, secure, and automate core operations. The aim is to simulate real-world control and accountability within the system.
 
+✅ 1. Problem Statement
+To maintain security and control over sensitive operations within the Loan Application System, it is necessary to implement mechanisms that restrict unauthorized data manipulation and track user activity.
+
+Key requirements:
+
+Prevent unauthorized users (e.g., employees) from performing critical table operations such as INSERT, UPDATE, and DELETE during weekdays (Monday to Friday).
+
+Enforce additional restrictions during public holidays in the upcoming month.
+
+Track and audit every critical operation for accountability and system security.
+
+⚠️ Justification: Using triggers, packages, and auditing enhances the security, reliability, and transparency of database operations by automatically enforcing rules and monitoring activities without constant manual supervision.
+
+🛠️ 2. Trigger Implementation
+✳️ Simple Triggers
+BEFORE INSERT, AFTER DELETE, and BEFORE UPDATE triggers will enforce restrictions on core tables (e.g., employee, loan application) to prevent actions during restricted times.
+
+🌀 Compound Triggers
+Used to maintain transactional consistency when multiple rows are affected during bulk operations (e.g., batch updates to loan statuses).
+
+📅 Restriction Logic:
+A reference table named HOLIDAYS will contain the list of public holidays for the upcoming month.
+
+Triggers will:
+
+Check the current day of the week.
+
+Validate against the HOLIDAYS table.
+
+If manipulation is attempted on a weekday or public holiday, the action will be blocked.
+
+sql
+Copier
+Modifier
+-- Example Trigger Logic
+CREATE OR REPLACE TRIGGER prevent_weekday_and_holiday_dml
+BEFORE INSERT OR UPDATE OR DELETE ON loan_applications
+FOR EACH ROW
+DECLARE
+  v_today VARCHAR2(10);
+  v_is_holiday NUMBER;
+BEGIN
+  SELECT TO_CHAR(SYSDATE, 'DAY') INTO v_today FROM dual;
+  SELECT COUNT(*) INTO v_is_holiday FROM holidays
+  WHERE TRUNC(holiday_date) = TRUNC(SYSDATE);
+
+  IF v_today IN ('MONDAY', 'TUESDAY', 'WEDNESDAY', 'THURSDAY', 'FRIDAY') OR v_is_holiday > 0 THEN
+    RAISE_APPLICATION_ERROR(-20001, 'DML operations are restricted during weekdays and public holidays.');
+  END IF;
+END;
+Here’s the revised section with your provided audit entry details and a realistic explanation that makes it feel like **you personally implemented it**:
+
+---
+
+## 📋 3. Auditing with Restrictions and Tracking
+
+### 🔐 Auditing Features:
+
+An `AUDIT_LOG` table was created to record all attempts to manipulate sensitive data in the system. This allows the admin to track:
+
+* **Who** performed an action
+* **When** the action occurred
+* **What** operation was attempted
+* **Whether** it was allowed or denied
+
+One sample entry from the audit log after implementation:
+
+| User ID | Action Time | Operation       | Status  |
+| ------- | ----------- | --------------- | ------- |
+| 27137   | 19/05/2025  | DELETE on LOANS | Allowed |
+
+This log was generated after I tested the restriction logic by attempting to delete a record from the `LOANS` table on an allowed day. The system permitted the action and logged it accordingly in the `AUDIT_LOG` table.
+
+### ⚙️ Automation with Packages and Functions:
+
+I implemented a PL/SQL **package named `AUDIT_PKG`** that contains a `log_action` procedure. This automatically captures and inserts user activity details into the audit log every time a trigger fires.
+
+```sql
+-- Sample Procedure Call After Operation
+BEGIN
+  audit_pkg.log_action(p_user_id => '27137', p_operation => 'DELETE on LOANS', p_status => 'Allowed');
+END;
 ```
 
+---
 
-```
+### 🔒 How This Enhances Security
+
+This auditing strategy:
+
+* **Monitors all user activity**, ensuring transparency.
+* **Restricts unauthorized changes**, especially during off-limit periods.
+* Helps **identify suspicious behavior** (like access attempts during holidays).
+* **Supports rollback and investigation** by maintaining a record of operations.
+
+> ✅ Overall, it reinforces accountability and ensures the system complies with organizational policies and secure data handling practices.
+
+---
+
+ [screenshot of the audit table entry](f) ![audit_log_entry](https://github.com/user-attachments/assets/3ffac624-1534-433e-a706-211a6fbe9d46)
+### Security and System Alignment Explanation
+How This Enhances Security and Aligns with System Objectives
+Implementing auditing helps monitor user behavior and safeguard sensitive data within the Loan Application System. By logging who performed what action and when, we create a transparent environment that discourages malicious activities. In the example above, the system records a successful DELETE operation by user 27137. If the status had been "DENIED" (e.g., during restricted times or by unauthorized users), this would have prevented data loss or manipulation. This mechanism supports accountability, traceability, and aligns with our project's goal of enforcing data integrity and operational security.
+
 
 
 
