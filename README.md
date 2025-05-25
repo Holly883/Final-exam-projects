@@ -272,7 +272,7 @@ This phase focuses on transforming the logical design of the Loan Application Sy
 
 ---
 
-## 🛠️ Table Structure & SQL Implementation  (PHASE IV)
+## 🛠️ Table Structure & SQL Implementation 
 
 All tables are created in Oracle using appropriate data types, constraints, and relationships to maintain integrity and support real-world use cases.
 
@@ -349,5 +349,190 @@ Calculating outstanding loan amounts
 Tracking payment schedules
 Monitoring customer loan history
 📌 All queries return expected results with no violations of constraints or anomalies detected.
+
+
+# 📦 Phase VI: Database Interaction and Transactions
+
+This phase focuses on performing structured operations within the Oracle database using DML and DDL commands, as well as implementing PL/SQL procedures, functions, and packages to enhance modularity, error handling, and testing. All interactions are carefully structured to support efficient data manipulation and analysis in the context of the Loan Application System project.
+
+---
+
+## ✅ Objectives
+
+- Interact with the database using DML & DDL statements.
+- Use procedures, functions, and packages to modularize logic.
+- Handle errors with proper exception blocks.
+- Test functionality for accuracy and stability.
+
+---
+
+## 📌 Task Overview
+
+### 1. Database Operations
+
+#### ➤ DML Commands
+
+```sql
+-- Insert data into Applicants table
+INSERT INTO applicants (applicant_id, full_name, credit_score)
+VALUES (101, 'Grace Kamanzi', 780);
+
+-- Update loan status
+UPDATE loan_applications
+SET status = 'Approved'
+WHERE application_id = 2001;
+
+-- Delete rejected application
+DELETE FROM loan_applications
+WHERE status = 'Rejected';
+````
+
+#### ➤ DDL Commands
+
+```sql
+-- Create a new audit log table
+CREATE TABLE audit_log (
+    log_id NUMBER PRIMARY KEY,
+    action_type VARCHAR2(20),
+    action_time TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
+
+-- Alter a column in loan_applications table
+ALTER TABLE loan_applications
+MODIFY status VARCHAR2(30);
+
+-- Drop unused temp table
+DROP TABLE temp_applications;
+```
+
+---
+
+### 2. Problem Statement
+
+> **"Analyze approved loan applications by branch to determine which branches approve the highest-value loans."**
+
+This problem requires grouping and aggregating data using analytics functions (like `RANK()` and `SUM()`).
+
+---
+
+### 3. Procedures and Functions
+
+#### ➤ Procedure with Parameters and Cursor
+
+```sql
+CREATE OR REPLACE PROCEDURE fetch_high_value_loans (
+    p_min_amount IN NUMBER
+)
+IS
+    CURSOR c_loans IS
+        SELECT full_name, loan_amount
+        FROM applicants a
+        JOIN loan_applications l ON a.applicant_id = l.applicant_id
+        WHERE loan_amount > p_min_amount;
+
+    v_full_name applicants.full_name%TYPE;
+    v_loan_amount loan_applications.loan_amount%TYPE;
+BEGIN
+    OPEN c_loans;
+    LOOP
+        FETCH c_loans INTO v_full_name, v_loan_amount;
+        EXIT WHEN c_loans%NOTFOUND;
+        DBMS_OUTPUT.PUT_LINE(v_full_name || ' - ' || v_loan_amount);
+    END LOOP;
+    CLOSE c_loans;
+EXCEPTION
+    WHEN OTHERS THEN
+        DBMS_OUTPUT.PUT_LINE('Error: ' || SQLERRM);
+END;
+```
+
+#### ➤ Function Example
+
+```sql
+CREATE OR REPLACE FUNCTION get_loan_status (
+    p_app_id IN NUMBER
+) RETURN VARCHAR2
+IS
+    v_status VARCHAR2(20);
+BEGIN
+    SELECT status INTO v_status
+    FROM loan_applications
+    WHERE application_id = p_app_id;
+
+    RETURN v_status;
+EXCEPTION
+    WHEN NO_DATA_FOUND THEN
+        RETURN 'Not Found';
+END;
+```
+
+---
+
+### 4. Testing
+
+* Inserted test data using scripts
+* Ran procedures to fetch results above loan threshold
+* Verified function returns correct loan status
+* Checked for exceptions using invalid inputs
+
+---
+
+### 5. Package Creation
+
+```sql
+CREATE OR REPLACE PACKAGE loan_pkg AS
+    PROCEDURE fetch_high_value_loans(p_min_amount IN NUMBER);
+    FUNCTION get_loan_status(p_app_id IN NUMBER) RETURN VARCHAR2;
+END loan_pkg;
+```
+
+```sql
+CREATE OR REPLACE PACKAGE BODY loan_pkg AS
+
+    PROCEDURE fetch_high_value_loans(p_min_amount IN NUMBER) IS
+        CURSOR c_loans IS
+            SELECT full_name, loan_amount
+            FROM applicants a
+            JOIN loan_applications l ON a.applicant_id = l.applicant_id
+            WHERE loan_amount > p_min_amount;
+        v_full_name applicants.full_name%TYPE;
+        v_loan_amount loan_applications.loan_amount%TYPE;
+    BEGIN
+        OPEN c_loans;
+        LOOP
+            FETCH c_loans INTO v_full_name, v_loan_amount;
+            EXIT WHEN c_loans%NOTFOUND;
+            DBMS_OUTPUT.PUT_LINE(v_full_name || ' - ' || v_loan_amount);
+        END LOOP;
+        CLOSE c_loans;
+    EXCEPTION
+        WHEN OTHERS THEN
+            DBMS_OUTPUT.PUT_LINE('Error: ' || SQLERRM);
+    END;
+
+    FUNCTION get_loan_status(p_app_id IN NUMBER) RETURN VARCHAR2 IS
+        v_status VARCHAR2(20);
+    BEGIN
+        SELECT status INTO v_status
+        FROM loan_applications
+        WHERE application_id = p_app_id;
+        RETURN v_status;
+    EXCEPTION
+        WHEN NO_DATA_FOUND THEN
+            RETURN 'Not Found';
+    END;
+
+END loan_pkg;
+```
+
+---
+
+> 🔍 **Summary**: All database operations are modularized, tested, and logically grouped for maintainability and clarity. The use of packages ensures reusable, secure, and error-resilient interactions with the Loan Application System database.
+
+```
+
+
+```
+
 
 
