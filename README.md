@@ -261,8 +261,8 @@ ALTER PLUGGABLE DATABASE  GrpE_27137_holiness_loanApplicationSystem_DB OPEN;
 
 -- Save state
 ALTER PLUGGABLE DATABASE  GrpE_27137_holiness_loanApplicationSystem_DB SAVE STATE;
-![Screenshot](images![WhatsApp Image 2025-05-25 at 01 01 49_c9366f86](https://github.com/user-attachments/assets/e8a88e1b-0c42-4ad4-9327-c7da7f1bd9f6)
-/screenshot.png)
+![WhatsApp Image 2025-05-25 at 01 01 49_40c45990](https://github.com/user-attachments/assets/03646c85-096f-4877-9619-d7578be42fc8)
+
 
 
 
